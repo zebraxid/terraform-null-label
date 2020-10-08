@@ -6,7 +6,7 @@ variable "context" {
     #stage               = string
     name                = string
     delimiter           = string
-    #attributes          = list(string)
+    attributes          = list(string)
     tags                = map(string)
     additional_tag_map  = map(string)
     regex_replace_chars = string
@@ -20,7 +20,7 @@ variable "context" {
     #stage               = null
     name                = null
     delimiter           = null
-    #attributes          = []
+    attributes          = []
     tags                = {}
     additional_tag_map  = {}
     regex_replace_chars = null
@@ -75,11 +75,11 @@ variable "delimiter" {
   EOT
 }
 
-#variable "attributes" {
-#  type        = list(string)
-#  default     = []
-#  description = "Additional attributes (e.g. `1`)"
-#}
+variable "attributes" {
+  type        = list(string)
+  default     = []
+  description = "Additional attributes (e.g. `1`)"
+}
 
 variable "tags" {
   type        = map(string)

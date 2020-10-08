@@ -2,7 +2,7 @@ locals {
 
   defaults = {
     #label_order         = ["namespace", "environment", "stage", "name", "attributes"]
-    label_order         = ["name"]
+    label_order         = ["name","attributes"]
     regex_replace_chars = "/[^-a-zA-Z0-9]/"
     delimiter           = "-"
     replacement         = ""
@@ -28,7 +28,7 @@ locals {
     #stage       = var.stage == null ? var.context.stage : var.stage
     name        = var.name == null ? var.context.name : var.name
     delimiter   = var.delimiter == null ? var.context.delimiter : var.delimiter
-    #attributes  = compact(distinct(concat(var.attributes, var.context.attributes)))
+    attributes  = compact(distinct(concat(var.attributes, var.context.attributes)))
     tags        = merge(var.context.tags, var.tags)
 
     additional_tag_map  = merge(var.context.additional_tag_map, var.additional_tag_map)
@@ -53,7 +53,7 @@ locals {
   additional_tag_map = merge(var.context.additional_tag_map, var.additional_tag_map)
 
   # Merge attributes
-  #attributes = compact(distinct(concat(local.input.attributes, local.defaults.attributes)))
+  attributes = compact(distinct(concat(local.input.attributes, local.defaults.attributes)))
 
   tags = merge(local.generated_tags, local.input.tags)
 
@@ -71,7 +71,7 @@ locals {
   #  namespace   = local.namespace
   #  environment = local.environment
   #  stage       = local.stage
-  #  attributes  = local.id_context.attributes
+    attributes  = local.id_context.attributes
   }
 
   generated_tags = { for l in keys(local.tags_context) : title(l) => local.tags_context[l] if length(local.tags_context[l]) > 0 }
@@ -81,7 +81,7 @@ locals {
   #  namespace   = local.namespace
   #  environment = local.environment
   #  stage       = local.stage
-  #  attributes  = lower(replace(join(local.delimiter, local.attributes), local.regex_replace_chars, local.replacement))
+    attributes  = lower(replace(join(local.delimiter, local.attributes), local.regex_replace_chars, local.replacement))
   }
 
   labels = [for l in local.label_order : local.id_context[l] if length(local.id_context[l]) > 0]
@@ -107,7 +107,7 @@ locals {
     #environment         = local.environment
     #stage               = local.stage
     delimiter           = local.delimiter
-    #attributes          = local.attributes
+    attributes          = local.attributes
     tags                = local.tags
     additional_tag_map  = local.additional_tag_map
     label_order         = local.label_order

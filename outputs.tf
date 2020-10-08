@@ -38,10 +38,10 @@ output "delimiter" {
   description = "Delimiter between `namespace`, `environment`, `stage`, `name` and `attributes`"
 }
 
-#output "attributes" {
-#  value       = local.enabled ? local.attributes : []
-#  description = "List of attributes"
-#}
+output "attributes" {
+  value       = local.enabled ? local.attributes : []
+  description = "List of attributes"
+}
 
 output "tags" {
   value       = local.enabled ? local.tags : {}
